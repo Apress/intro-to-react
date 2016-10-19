@@ -1,0 +1,19 @@
+{
+  "name": "BasicDemo",
+  "version": "1.0.0",
+  "description": "$ npm install -g browserify watchify babel\r $ npm install react browserify watchify babelify --save-dev",
+  "main": "index.js",
+  "dependencies": {
+    "babel": "^5.2.15",
+    "babelify": "^6.0.2",
+    "browserify": "^10.1.0",
+    "react": "^0.13.2",
+    "watchify": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "watch": "watchify -t babelify ./src/app.jsx -o ./dist/bundle.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

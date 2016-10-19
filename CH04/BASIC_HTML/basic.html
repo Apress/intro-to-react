@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Workout Diary</title>
+	<style>
+		#defineWorkouts {
+			display: none;
+		}
+		#logWorkout {
+			display: none;
+		}
+		#viewHistory {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Workout Diary</h1>	
+    <!-- User is Not logged in -->
+	<div id="signInForm" class="notSignedIn">
+		<label for="username">Username:</label>
+		<input type="text" id="username">
+		<label for="password">Password:</label>
+		<input type="text" id="password">
+		<button id="signIn">Sign In</button>
+	</div>
+    <div id="createAccount" class="notSignedIn">
+        <label for="username">Username:</label>
+        <input type="text" id="username">
+        <label for="password">Password:</label>
+        <input type="text" id="password">   
+        <label for="password">Confirm Password:</label>
+        <input type="text" id="confpassword">
+        <button id="signIn">Create Account</button>
+    </div>
+    <br>
+    <!-- User Is Logged In -->
+    <div class="signedIn">
+        <ul id="navMenu">
+            <li><a href="#defineWorkouts">Define Workouts</a></li>
+            <li><a href="#logWorkout">Log Workout</a></li>
+            <li><a href="#viewHistory">View History</a></li>
+            <li><a href="#logout" id="logout">Logout</a></li>
+        </ul>
+        <div id="defineWorkouts" class="tabview">
+            <label for="defineName">Define Name</label>
+            <input type="text" id="defineName">
+            <label for="defineType">Define Type</label>
+            <input id="defineType" type="text">
+            <label for="defineDesc">Description</label>
+            <textarea id="defineDesc" ></textarea>
+            <button id="saveDefinition">Save Definition</button>
+        </div>
+        <div id="logWorkout" class="tabview">
+        	<label for="chooseWorkout">Workout:</label>
+        	<select name="" id="chooseWorkout">
+        		<!-- populated via script -->
+        	</select>
+        	<label for="workoutResult">Result:</label>
+        	<!-- input based on the type of the workout chosen -->
+            <input id="workoutResult" type="text" />
+            <input id="workoutDate" type="date" />
+        	<label for="notes">Notes:</label>
+        	<textarea id="notes"></textarea>
+        </div>
+        <div id="viewHistory" class="tabview">
+        <!-- dynamically populated -->
+            <ul id="history">
+            </ul>
+        </div>
+    </div>
+<script src="jquery.js"></script>
+<script>
+var doLogout = function() {
+    $(".notSignedIn").show();
+    $(".signedIn").hide();
+};
+
+var definedWorkouts = [
+{
+    "name": "Murph",
+    "type": "fortime",
+    "description": "Run 1 Mile \n 100 pull-ups \n 200 push-ups \n 300 squats \n Run 1 Mile"
+},
+{
+    "name": "Tabata Something Else",
+    "type": "reps",
+    "description": "4 x 20 seconds on 10 seconds off for 4 minutes \n pull-ups, push-ups, sit-ups, squats"
+}
+/* ... */
+];
+var workoutHistory = [ 
+{
+    "name": "Murph",
+    "result": "32:18",
+    "notes": "painful, but fun"
+},
+{
+    "name": "Tabata Something Else",
+    "type": "reps",
+    "result": "421",
+    "notes": ""
+}
+/* ... */
+];
+
+
+$(function() {
+	doLogout();
+	// populate history, and chooseWorkout select
+    var i;
+    for (i = 0; i < definedWorkouts.length; i++) {
+        var wk = "<option>" + definedWorkouts[i].name + "</option>";
+        $("#chooseWorkout").append(wk);
+    }
+
+    for (i = 0; i < workoutHistory.length; i++) {
+        var hist = "<li>" + workoutHistory[i].name + " - " + workoutHistory[i].result +  "</li>";
+        $("#history").append(hist);
+    }
+});
+
+
+$("#signIn").on("click", function() {
+    // do authentication
+    $(".notSignedIn").hide();
+    $(".signedIn").show();
+});
+
+$("#logout").on("click", doLogout );
+
+$("#navMenu > li > a").on("click", function () {
+    $(".tabView").hide();
+    $($(this).attr("href")).show();
+});
+</script>
+</body>
+</html>
